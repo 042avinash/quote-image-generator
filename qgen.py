@@ -87,4 +87,4 @@ def generate():
 if __name__ == '__main__':
     if not os.path.exists(app.config['STATIC_FOLDER']):
         os.makedirs(app.config['STATIC_FOLDER'])
-    app.run(debug=True)
+    app.run(debug=False, host='0.0.0.0')
