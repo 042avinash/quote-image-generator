@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Quote Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #333333;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        #quote-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px; /* Added border radius for image */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Random Quote Generator</h1>
+        <img id="quote-image" src="{{ url_for('static', filename='quote_image.png') }}" alt="Quote Image">
+        <br>
+        <button onclick="generateQuote()">Generate Random Quote</button>
+    </div>
+
+    <script>
+        function generateQuote() {
+            fetch('/generate')
+                .then(response => response.blob())
+                .then(blob => {
+                    const img = document.getElementById('quote-image');
+                    const url = URL.createObjectURL(blob);
+                    img.src = url; // Removed timestamp to prevent caching issues
+                })
+                .catch(error => console.error('Error generating quote:', error));
+        }
+    </script>
+</body>
+</html>
